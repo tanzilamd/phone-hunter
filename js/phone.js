@@ -19,6 +19,7 @@ const displayPhone = (phones) => {
         console.log(phone);
         // create a div
         const phoneCart = document.createElement("div");
+
         phoneCart.classList = `card bg-base-100 shadow-xl`;
         phoneCart.innerHTML = `
             <figure>
