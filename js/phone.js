@@ -9,6 +9,7 @@ const loadPhone = async (searchName = "iphone", isShowAll) => {
     displayPhone(phone, isShowAll);
 };
 
+// Display with html element
 const displayPhone = (phones, isShowAll) => {
     const phoneContainer = document.getElementById("phone-container");
 
@@ -30,7 +31,7 @@ const displayPhone = (phones, isShowAll) => {
     }
 
     phones.forEach((phone) => {
-        console.log(phone);
+        // console.log(phone);
         // create a div
         const phoneCart = document.createElement("div");
 
@@ -43,8 +44,8 @@ const displayPhone = (phones, isShowAll) => {
             <div class="card-body">
                 <h2 class="card-title">${phone.phone_name}</h2>
                 <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
+                <div class="card-actions justify-center">
+                    <button onclick="handleShowDetails('${phone.slug}');" class="btn btn-info text-white">Show Details</button>
                 </div>
             </div>
         `;
@@ -62,7 +63,7 @@ const handleSerch = (isShowAll) => {
     const searchField = document.getElementById("search-field");
     const searchText = searchField.value;
 
-    console.log(searchText);
+    // console.log(searchText);
 
     loadPhone(searchText, isShowAll);
 };
@@ -81,6 +82,42 @@ const loadingData = (isLoading) => {
 // Handle show all
 const handleShowAll = () => {
     handleSerch(true);
+};
+
+// Handle show details
+const handleShowDetails = async (id) => {
+    // console.log(id);
+    const res = await fetch(
+        `https://openapi.programming-hero.com/api/phone/${id}`
+    );
+    const data = await res.json();
+    // console.log(data);
+
+    phone = data.data;
+    showPhoneDetails(phone);
+    console.log(phone);
+};
+
+const showPhoneDetails = (phone) => {
+    const phoneName = document.getElementById("show_details_phone_name");
+    phoneName.innerText = phone.name;
+
+    console.log(phone);
+
+    const showDetailContainer = document.getElementById(
+        "phone-detail-container"
+    );
+    showDetailContainer.innerHTML = `
+        <img class="my-4" src="${phone.image}" alt="phone"/>
+        <p><span class="font-bold">Brand:</span> ${phone?.brand}</p>
+        <p><span class="font-bold">Display:</span> ${phone?.mainFeatures?.displaySize}</p>
+        <p><span class="font-bold">Storage:</span> ${phone?.mainFeatures?.storage}</p>
+        <p><span class="font-bold">Chipset:</span> ${phone?.mainFeatures?.chipSet}</p>
+        <p><span class="font-bold">GPS:</span> ${phone?.others?.GPS}</p>
+        <p><span class="font-bold">Release Date:</span> ${phone?.releaseDate}</p>
+    `;
+
+    show_details_modal.showModal();
 };
 
 loadPhone();
