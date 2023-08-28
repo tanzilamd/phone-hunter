@@ -1,4 +1,4 @@
-// Brands: iphone, samgsung, oppo
+// Brands: iphone, samgsung, oppo, huawei
 const loadPhone = async (searchName = "iphone") => {
     const res = await fetch(
         `https://openapi.programming-hero.com/api/phones?search=${searchName}`
@@ -14,6 +14,15 @@ const displayPhone = (phones) => {
 
     // clear container for search
     phoneContainer.textContent = "";
+
+    // Show all btn
+    const showAllContainer = document.getElementById("show-all-container");
+
+    if (phones.length > 12) {
+        showAllContainer.classList.remove("hidden");
+    } else {
+        showAllContainer.classList.add("hidden");
+    }
 
     phones.forEach((phone) => {
         console.log(phone);
