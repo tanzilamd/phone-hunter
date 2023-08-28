@@ -107,14 +107,28 @@ const showPhoneDetails = (phone) => {
     const showDetailContainer = document.getElementById(
         "phone-detail-container"
     );
+
     showDetailContainer.innerHTML = `
         <img class="my-4" src="${phone.image}" alt="phone"/>
         <p><span class="font-bold">Brand:</span> ${phone?.brand}</p>
-        <p><span class="font-bold">Display:</span> ${phone?.mainFeatures?.displaySize}</p>
-        <p><span class="font-bold">Storage:</span> ${phone?.mainFeatures?.storage}</p>
-        <p><span class="font-bold">Chipset:</span> ${phone?.mainFeatures?.chipSet}</p>
-        <p><span class="font-bold">GPS:</span> ${phone?.others?.GPS}</p>
-        <p><span class="font-bold">Release Date:</span> ${phone?.releaseDate}</p>
+        <p><span class="font-bold">Display:</span> ${
+            phone?.mainFeatures?.displaySize
+        }</p>
+        <p><span class="font-bold">Storage:</span> ${
+            phone?.mainFeatures?.storage
+        }</p>
+        <p><span class="font-bold">Chipset:</span> ${
+            phone?.mainFeatures?.chipSet
+        }</p>
+        <p><span class="font-bold">GPS:</span> ${
+            phone?.others?.GPS || "No GPS"
+        }</p>
+        <p><span class="font-bold">WLAN:</span> ${
+            phone?.others?.WLAN || "No WLAN"
+        }</p>
+        <p><span class="font-bold">Release Date:</span> ${
+            phone?.releaseDate
+        }</p>
     `;
 
     show_details_modal.showModal();
