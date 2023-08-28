@@ -1,15 +1,15 @@
 // Brands: iphone, samgsung, oppo, huawei
-const loadPhone = async (searchName = "iphone") => {
+const loadPhone = async (searchName = "iphone", isShowAll) => {
     const res = await fetch(
         `https://openapi.programming-hero.com/api/phones?search=${searchName}`
     );
     const data = await res.json();
     const phone = data.data;
 
-    displayPhone(phone);
+    displayPhone(phone, isShowAll);
 };
 
-const displayPhone = (phones) => {
+const displayPhone = (phones, isShowAll) => {
     const phoneContainer = document.getElementById("phone-container");
 
     // clear container for search
@@ -18,10 +18,15 @@ const displayPhone = (phones) => {
     // Show all btn
     const showAllContainer = document.getElementById("show-all-container");
 
-    if (phones.length > 12) {
+    if (phones.length > 12 && !isShowAll) {
         showAllContainer.classList.remove("hidden");
     } else {
         showAllContainer.classList.add("hidden");
+    }
+
+    // show 12
+    if (!isShowAll) {
+        phones = phones.slice(0, 12);
     }
 
     phones.forEach((phone) => {
@@ -52,14 +57,14 @@ const displayPhone = (phones) => {
 };
 
 // Handle serach
-const handleSerch = () => {
+const handleSerch = (isShowAll) => {
     loadingData(true);
     const searchField = document.getElementById("search-field");
     const searchText = searchField.value;
 
     console.log(searchText);
 
-    loadPhone(searchText);
+    loadPhone(searchText, isShowAll);
 };
 
 // loading spinner
@@ -71,6 +76,11 @@ const loadingData = (isLoading) => {
     } else {
         loadingSpinner.classList.add("hidden");
     }
+};
+
+// Handle show all
+const handleShowAll = () => {
+    handleSerch(true);
 };
 
 loadPhone();
